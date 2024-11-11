@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=wb_storage
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "6433:5432"
+    command: >
+      bash -c "
+        echo 'Creating database...' &&
+        psql -U postgres -c 'CREATE DATABASE wb_storage;' || true
+      "
+
+volumes:
+  postgres_data:
